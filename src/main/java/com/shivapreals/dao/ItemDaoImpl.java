@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.shivapreals.config.MyInterceptor;
 import com.shivapreals.entity.Item;
 
 @Repository
@@ -17,7 +18,7 @@ public SessionFactory sessionFactory;
 @Transactional
 	public void save(Item itemObj)
 	{
-		sessionFactory.getCurrentSession().save(itemObj);
+		sessionFactory.withOptions().interceptor(new MyInterceptor()).openSession().save(itemObj);
 	}
 @Transactional
 	public List<Item> getItemList()
